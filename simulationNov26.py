@@ -18,4 +18,7 @@ def simRun(floorNum,elevaNum,ppNumPerFloor,
         for floorEleva_i in floorPathEleva_i:
             tmpTime = (timeOpenWait + timePerFloor) * floorEleva_i
             timeSpend.append(tmpTime)
+    return timeSpend
+    
+ff = simRun(floorNum,elevaNum,ppNumPerFloor,timeOpenWait,timePerFloor,floorAlocation)
     
