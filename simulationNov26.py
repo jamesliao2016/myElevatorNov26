@@ -1,5 +1,6 @@
 
 import numpy as np
+import itertools as its
 
 floorNum = 21
 elevaNum = 8
@@ -18,7 +19,8 @@ def simRun(floorNum,elevaNum,ppNumPerFloor,
         for floorEleva_i in floorPathEleva_i:
             tmpTime = (timeOpenWait + timePerFloor) * floorEleva_i
             timeSpend.append(tmpTime)
-    return timeSpend
+    return timeSpend,np.mean(timeSpend)
     
-ff = simRun(floorNum,elevaNum,ppNumPerFloor,timeOpenWait,timePerFloor,floorAlocation)
-    
+ff,ffMean = simRun(floorNum,elevaNum,ppNumPerFloor,timeOpenWait,timePerFloor,floorAlocation)
+
+floorComb = its.combinations(range(1,(floorNum+1)),(elevaNum-1))    
