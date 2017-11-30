@@ -9,7 +9,7 @@ ppNumPerFloor = 300
 timePerFloor = 2
 timeOpenWait = 5
 
-floorAlocation = [(ii + 1) for ii in range(elevaNum)]
+floorAlocation = [(ii + 1) for ii in range(elevaNum-1)]
 
 # This function compute the (time, avg_time) for any allocation scheme
 def simRun(floorNum,elevaNum,ppNumPerFloor,
@@ -17,14 +17,15 @@ def simRun(floorNum,elevaNum,ppNumPerFloor,
     # The allocation scheme: floorAlocation, like [3,6,10]
     checknum = 0
     timeSpend = []
+    floorAlocation.append(floorNum)
     for eleva_i in floorAlocation:
         # Break down the allocation scheme to floors
         if checknum<1:
             floorPathEleva_i = [(ii + 1) for ii in range(eleva_i)]
-        elif checknum<elevaNum:
-            floorPathEleva_i = [(ii + 1) for ii in range(floorAlocation[checknum-1],eleva_i)]
+        elif checknum<(elevaNum-1):
+            floorPathEleva_i = [(ii + 1) for ii in range(floorAlocation[checknum-1],floorAlocation[checknum])]
         else:
-            floorPathEleva_i = [(ii + 1) for ii in range(floorAlocation[checknum-1],floorNum)]
+            floorPathEleva_i = [(ii + 1) for ii in range(floorAlocation[elevaNum-2],floorNum+1)]
 
         # Compute the running and openning time for each floor
         # floorEleva_i: the specific floor in the floor pool of elevator_i
@@ -45,7 +46,7 @@ def simRun(floorNum,elevaNum,ppNumPerFloor,
 ff,ffMean = simRun(floorNum,elevaNum,ppNumPerFloor,timeOpenWait,timePerFloor,floorAlocation)
    
 # All possible combinations of the floor allocation to the elevators
-floorComb = its.combinations(range(1,(floorNum+1)),(elevaNum))    
+floorComb = its.combinations(range(1,(floorNum+1)),(elevaNum-1))
 
 import pandas as pd
 tmpTime = pd.DataFrame([{'time':0}])
