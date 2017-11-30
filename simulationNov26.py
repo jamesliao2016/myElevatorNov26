@@ -40,7 +40,7 @@ def simRun(floorNum,elevaNum,ppNumPerFloor,
     return timeSpend,np.mean(timeSpend)
     
 ff,ffMean = simRun(floorNum,elevaNum,ppNumPerFloor,timeOpenWait,timePerFloor,floorAlocation)
-
+   
 # All possible combinations of the floor allocation to the elevators
 floorComb = its.combinations(range(1,(floorNum+1)),(elevaNum))    
 
