@@ -2,8 +2,8 @@
 import numpy as np
 import itertools as its
 
-floorNum = 21
-elevaNum = 8
+floorNum = 10
+elevaNum = 3
 ppNumPerFloor = 300
 
 timePerFloor = 2
@@ -16,13 +16,16 @@ def simRun(floorNum,elevaNum,ppNumPerFloor,
            timeOpenWait,timePerFloor,floorAlocation):
     # The allocation scheme: floorAlocation, like [3,6,10]
     checknum = 0
+    timeSpend = []
     for eleva_i in floorAlocation:
         # Break down the allocation scheme to floors
         if checknum<1:
             floorPathEleva_i = [(ii + 1) for ii in range(eleva_i)]
-        else:
+        elif checknum<elevaNum:
             floorPathEleva_i = [(ii + 1) for ii in range(floorAlocation[checknum-1],eleva_i)]
-        timeSpend = []
+        else:
+            floorPathEleva_i = [(ii + 1) for ii in range(floorAlocation[checknum-1],floorNum)]
+
         # Compute the running and openning time for each floor
         # floorEleva_i: the specific floor in the floor pool of elevator_i
         # floorPathEleva_i: the allocated floors for elevator_i
@@ -67,8 +70,8 @@ for floorComb_i in floorComb:
     ff,ffMean = simRun(floorNum,elevaNum,ppNumPerFloor,\
                        timeOpenWait,timePerFloor,floorAlocation)
         
-    for cc in range(floorNum):
-        tmpTime[('floorTime'+str(cc))] = ff[cc-1]
+    for dd in range(floorNum):
+        tmpTime[('floorTime'+str(dd))] = ff[dd]
     tmpTime['time'] = ffMean
     tableFull = pd.concat([tableFull, tmpTime],ignore_index =True)
 
