@@ -20,6 +20,8 @@ def simRun(floorNum,elevaNum,ppNumPerFloor,
         floorPathEleva_i = [(ii + 1) for ii in range(eleva_i)]
         timeSpend = []
         # Compute the running and openning time for each floor
+        # floorEleva_i: the specific floor in the floor pool of elevator_i
+        # floorPathEleva_i: the allocated floors for elevator_i
         for floorEleva_i in floorPathEleva_i:
             tmpTime = (timeOpenWait + timePerFloor) * floorEleva_i
             timeSpend.append(tmpTime)
@@ -58,3 +60,4 @@ for floorComb_i in floorComb:
     tmpTime['time'] = ffMean
     tableFull = pd.concat([tableFull, tmpTime],ignore_index =True)
 
+tableFull.to_csv('tableFull.csv',index=False)
