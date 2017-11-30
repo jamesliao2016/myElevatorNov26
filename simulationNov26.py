@@ -14,17 +14,29 @@ floorAlocation = [(ii + 1) for ii in range(elevaNum)]
 # This function compute the (time, avg_time) for any allocation scheme
 def simRun(floorNum,elevaNum,ppNumPerFloor,
            timeOpenWait,timePerFloor,floorAlocation):
-    # The allocation scheme
-    for eleva_i in range(floorNum):
+    # The allocation scheme: floorAlocation, like [3,6,10]
+    checknum = 0
+    for eleva_i in floorAlocation:
         # Break down the allocation scheme to floors
-        floorPathEleva_i = [(ii + 1) for ii in range(eleva_i)]
+        if checknum<1:
+            floorPathEleva_i = [(ii + 1) for ii in range(eleva_i)]
+        else:
+            floorPathEleva_i = [(ii + 1) for ii in range(floorAlocation[checknum-1],eleva_i)]
         timeSpend = []
         # Compute the running and openning time for each floor
         # floorEleva_i: the specific floor in the floor pool of elevator_i
         # floorPathEleva_i: the allocated floors for elevator_i
         for floorEleva_i in floorPathEleva_i:
-            tmpTime = (timeOpenWait + timePerFloor) * floorEleva_i
+            tmpTimeClimb = timePerFloor * floorEleva_i
+            if checknum < 1:
+                climbNum = floorEleva_i
+            else:
+                climbNum = floorEleva_i - floorAlocation[checknum - 1]
+            tmpTimeOpen = timeOpenWait * floorEleva_i
+            tmpTimeClimb = (timeOpenWait + timePerFloor) * climbNum
+            tmpTime = tmpTimeOpen + tmpTimeClimb
             timeSpend.append(tmpTime)
+        checknum = checknum + 1
     return timeSpend,np.mean(timeSpend)
     
 ff,ffMean = simRun(floorNum,elevaNum,ppNumPerFloor,timeOpenWait,timePerFloor,floorAlocation)
