@@ -2,22 +2,23 @@
 import numpy as np
 import itertools as its
 
-floorNum = 10
-elevaNum = 3
+floorNum = 30
+elevaNum = 10
 ppNumPerFloor = 300
 
 timePerFloor = 2
 timeOpenWait = 5
 
+outputFile = 'export_floor' + str(floorNum) + '_elevator_' + str(elevaNum) + '.csv'
 floorAlocation = [(ii + 1) for ii in range(elevaNum-1)]
-
+floorAlocation.append(floorNum)
 # This function compute the (time, avg_time) for any allocation scheme
 def simRun(floorNum,elevaNum,ppNumPerFloor,
            timeOpenWait,timePerFloor,floorAlocation):
     # The allocation scheme: floorAlocation, like [3,6,10]
     checknum = 0
     timeSpend = []
-    floorAlocation.append(floorNum)
+    # floorAlocation.append(floorNum)
     for eleva_i in floorAlocation:
         # Break down the allocation scheme to floors
         if checknum<1:
@@ -62,12 +63,14 @@ for cc in range(1,(floorNum+1)):
 # Compute all the (time,avg_time) and fill into the table
 tableFull = pd.DataFrame()
 for floorComb_i in floorComb:
+    floorAlocation = [(ii) for ii in floorComb_i]
     # Fill the floors into the allocated elevators
+    floorAlocation.append(floorNum)
     tt = 1
-    for cc in (floorComb_i):
+    for cc in (floorAlocation):
         tmpTime[('elevator'+str(tt))] = cc
         tt =tt+1
-    floorAlocation = [(ii) for ii in floorComb_i]
+
     ff,ffMean = simRun(floorNum,elevaNum,ppNumPerFloor,\
                        timeOpenWait,timePerFloor,floorAlocation)
         
@@ -76,4 +79,4 @@ for floorComb_i in floorComb:
     tmpTime['time'] = ffMean
     tableFull = pd.concat([tableFull, tmpTime],ignore_index =True)
 
-tableFull.to_csv('tableFull.csv',index=False)
+tableFull.to_csv(outputFile,index=False)
