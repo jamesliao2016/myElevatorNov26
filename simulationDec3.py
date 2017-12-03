@@ -1,6 +1,8 @@
 import numpy as np
 import itertools as its
+import pandas as pd
 
+# Parameters
 floorNum = 30
 elevaNum = 10
 ppNumPerFloor = 300
@@ -14,7 +16,7 @@ floorAlocation.append(floorNum)
 
 
 # This function compute the (time, avg_time) for any allocation scheme
-def simRun(floorNum, elevaNum, ppNumPerFloor,
+def calTime(floorNum, elevaNum, ppNumPerFloor,
            timeOpenWait, timePerFloor, floorAlocation):
     # The allocation scheme: floorAlocation, like [3,6,10]
     checknum = 0
@@ -45,14 +47,16 @@ def simRun(floorNum, elevaNum, ppNumPerFloor,
         checknum = checknum + 1
     return timeSpend, np.mean(timeSpend)
 
-
-ff, ffMean = simRun(floorNum, elevaNum, ppNumPerFloor, timeOpenWait, timePerFloor, floorAlocation)
+# ff, ffMean = simRun(floorNum, elevaNum, ppNumPerFloor, timeOpenWait, timePerFloor, floorAlocation)
 
 # All possible combinations of the floor allocation to the elevators
-floorComb = its.combinations(range(1, (floorNum + 1)), (elevaNum - 1))
+# floorComb = its.combinations(range(1, (floorNum + 1)), (elevaNum - 1))
+def allotGenerate(floorAllot,timeSpend,floorNum):
+    tBase = 999999999
+    for ii in timeSpend:
 
-import pandas as pd
-
+        tt,tMean = calTime(floorNum, elevaNum, ppNumPerFloor, \
+                        timeOpenWait, timePerFloor, floorAllot)
 tmpTime = pd.DataFrame([{'time': 0}])
 
 # Save the allocation scheme to the Pandas Dataframe
@@ -66,20 +70,22 @@ for cc in range(1, (floorNum + 1)):
 # Compute all the (time,avg_time) and fill into the table
 tableFull = pd.DataFrame()
 for floorComb_i in floorComb:
-    floorAlocation = [(ii) for ii in floorComb_i]
+    floorAllot = [(ii) for ii in floorComb_i]
     # Fill the floors into the allocated elevators
-    floorAlocation.append(floorNum)
+    floorAllot.append(floorNum)
     tt = 1
-    for cc in (floorAlocation):
+    for cc in (floorAllot):
         tmpTime[('elevator' + str(tt))] = cc
         tt = tt + 1
 
-    ff, ffMean = simRun(floorNum, elevaNum, ppNumPerFloor, \
-                        timeOpenWait, timePerFloor, floorAlocation)
+    ff, ffMean = calTime(floorNum, elevaNum, ppNumPerFloor, \
+                        timeOpenWait, timePerFloor, floorAllot)
 
     for dd in range(floorNum):
         tmpTime[('floorTime' + str(dd))] = ff[dd]
     tmpTime['time'] = ffMean
     tableFull = pd.concat([tableFull, tmpTime], ignore_index=True)
 
-tableFull.to_csv(outputFile, index=False)
+# run the file
+if __name__ == '__main__':
+    tableFull.to_csv(outputFile, index=False)
