@@ -16,14 +16,14 @@ def poisProbAcc(lambdax,nx):
 # Return the arrival number based on the poisson distribution
 def retPoiNum(lambdax):
     jj = np.random.uniform()
-    rlt = 0.0
+    rlt = 0
     for kk in range(100):
         dd1 = poisProbAcc(lambdax,kk)
         dd2 = poisProbAcc(lambdax,(kk+1))
 
         if jj > dd1 and jj < dd2:
             rlt = kk
-            print(' %f %f %f' % (dd1, dd2, jj))
+            # print(' %f %f %f' % (dd1, dd2, jj))
             break
     return rlt
 
