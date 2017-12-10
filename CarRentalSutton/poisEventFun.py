@@ -28,14 +28,6 @@ def retPoiNum(lambdax):
     return rlt
 
 
-def eventOccur(lambdax,nx):
-    jj = np.random.uniform()
-    dd = poisProbAcc(3, 3)
-    rlt = 0
-    if jj < dd:
-        rlt = 1
-    return rlt
-
 if __name__ == '__main__':
     # for cc in range(20):
     #     jj = np.random.uniform()
@@ -54,3 +46,12 @@ if __name__ == '__main__':
     #     print(jj)
     #     if jj>5:
     #         break
+
+
+# def eventOccur(lambdax,nx):
+#     jj = np.random.uniform()
+#     dd = poisProbAcc(3, 3)
+#     rlt = 0
+#     if jj < dd:
+#         rlt = 1
+#     return rlt
