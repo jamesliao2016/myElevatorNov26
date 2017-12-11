@@ -1,5 +1,9 @@
 import numpy as np
 
+# Random policy
+# Assume there is a linear grid, the chance of choosing each direction is same
+# The objective is to reach the two ends
+
 stNum = 8
 rewVal = -1
 prob = 0.5
