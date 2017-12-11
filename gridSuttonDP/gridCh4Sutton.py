@@ -1,9 +1,9 @@
 import numpy as np
 
-stNum = 5
+stNum = 8
 rewVal = -1
 prob = 0.5
-epsThr = 1e-3
+epsThr = 1e-6
 
 action = [0,1]
 states = list(range(1,stNum))
@@ -16,7 +16,7 @@ while True:
             dirct = 1
             if ee == 0:
                 dirct = -1
-            valVecTmp[qq] = prob * (rewVal + valVec[qq + dirct])
+            valVecTmp[qq] += prob * (rewVal + valVec[qq + dirct])
     gg = np.sum(np.abs(valVec -valVecTmp))
     if gg < epsThr:
         print(valVec)
