@@ -12,7 +12,8 @@ epsThr = 1e-6
 action = [0,1]
 states = list(range(1,stNum))
 valVec = np.zeros(stNum+1)
-
+'''
+# initial policy evaluation
 while True:
     valVecTmp = np.zeros(stNum+1)
     for qq in states:
@@ -26,6 +27,8 @@ while True:
         # print(valVec)
         break
     valVec = valVecTmp
+
+'''
 
 stAct = [[(0.5) for ii in range(2)] for jj in range(1,stNum)]
 
