@@ -1,12 +1,13 @@
 "Reinforcement Learning Gamblers Problem"
 "Value iteration method to generate v* and pi*"
 "@author = Prateek Bhat"
+# Revised above author's code
 
-import plotly.plotly as py
-import plotly.graph_objs as go
+# import plotly.plotly as py
+# import plotly.graph_objs as go
 import matplotlib.pyplot as plt
 
-py.sign_in('username', 'API key')
+# py.sign_in('username', 'API key')
 
 "Discount factor"
 gamma = 1
@@ -37,9 +38,16 @@ def gambler():
             delta = max(delta,diff)
     print (value)
 
-    # plot()
-    plt.plot(policy)
+    xaxis = [i for i in range(100)]
+    del value[101:]
+    del value[:1]
+    del policy[101:]
+    del policy[:1]
+    print(len(xaxis))
+    print(len(policy))
+    plt.scatter(xaxis,policy)
     plt.show()
+    print(policy)
 def bellmanequation(num):
     "Initialize optimal value to be zero"
     optimalvalue = 0
@@ -58,32 +66,6 @@ def bellmanequation(num):
             optimalvalue = sum
             value[num] = sum
             policy[num] = bet
-
-"Plot the graphs for Value function and Final policy"
-def plot():
-    xaxis = [i for i in range(1,100)]
-    del value[101:]
-    del value[:1]
-    del policy[101:]
-    del policy[:1]
-    # Create a trace
-
-    trace = go.Scatter(
-        x = xaxis,
-        y = value,
-        mode = 'lines'
-    )
-
-    trace1 = go.Scatter(
-        x = xaxis,
-        y = policy,
-        mode = 'lines'
-    )
-
-    data=[trace]
-    data1=[trace1]
-    py.iplot(data)
-    py.iplot(data1)
 
 if __name__=="__main__":
     gambler()
