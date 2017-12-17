@@ -15,17 +15,21 @@ def reallot(iniCars,tmpArr,tmpRep,lostSale,upCarNum):
         rentVec.append(rentNum)
     return iniCars,lostSale,rentVec
 
-def calVal(vt,rentVec,mvNumAbs):
+def calVal(rentVec,mvNumAbs):
+    vt = 0
     for yy in rentVec:
         vt += yy * 10
     return vt - mvNumAbs * 2
 
-def moveCar(iniCars,diffNum):
+def moveCar(iniCars,action, upCarNum):
+
     car1 = iniCars[0]
     car2 = iniCars[1]
-    moveNum = diffNum
-    if (car1 <= car2):
-        moveNum = -diffNum
-    iniCars[0] -= moveNum
-    iniCars[1] += moveNum
-    return iniCars, abs(moveNum)
+    moveNum = action
+    if (action > 0):
+        car1 = max(car1 - action,0)
+        car2 = min(car2 + action,upCarNum)
+    else:
+        car1 = min(car1 - action, upCarNum)
+        car2 = max(car2 + action, 0)
+    return [car1,car2], abs(moveNum)
