@@ -20,12 +20,12 @@ def calVal(vt,rentVec,mvNumAbs):
         vt += yy * 10
     return vt - mvNumAbs * 2
 
-def moveCar(iniCars,carPol):
+def moveCar(iniCars,diffNum):
     car1 = iniCars[0]
     car2 = iniCars[1]
-    moveNum = carPol[car1][car2]
-    if abs(moveNum) > 5:
-        moveNum = 5 * moveNum /abs(moveNum)
+    moveNum = diffNum
+    if (car1 <= car2):
+        moveNum = -diffNum
     iniCars[0] -= moveNum
     iniCars[1] += moveNum
     return iniCars, abs(moveNum)
