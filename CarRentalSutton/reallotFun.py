@@ -25,14 +25,15 @@ def moveCar(iniCars,action, upCarNum):
 
     car1 = iniCars[0]
     car2 = iniCars[1]
-    moveNum = action
+    moveNum = 0
     if (action > 0):
         action = min(action,car1,car2)
         car1 = max(car1 - action,0)
         car2 = min(car2 + action,upCarNum)
-        moveNum =
+        moveNum = action
     else:
         action = min(-action, car1, car2)
         car1 = min(car1 - action, upCarNum)
         car2 = max(car2 + action, 0)
+        moveNum = action
     return [car1,car2], abs(moveNum)

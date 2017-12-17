@@ -15,12 +15,12 @@ carPol = [[int((y - x)/2) for x in range(w+1)] for y in range(h+1)]
 valVec = [[(0.0) for x in range(w+1)] for y in range(h+1)]
 
 # Simulation parameters
-simPeriod = 10
+simPeriod = 2
 iniCars = [10,10]
 lostSale = [(i-i) for i in range(len(iniCars))]
 vt = 0
 mvNumAbs = 0
-epsDltBase = 0.01
+epsDltBase = 0.1
 epsDlt = 100
 ww = 1
 vtHist = [2]
