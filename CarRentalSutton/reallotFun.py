@@ -27,9 +27,12 @@ def moveCar(iniCars,action, upCarNum):
     car2 = iniCars[1]
     moveNum = action
     if (action > 0):
+        action = min(action,car1,car2)
         car1 = max(car1 - action,0)
         car2 = min(car2 + action,upCarNum)
+        moveNum =
     else:
+        action = min(-action, car1, car2)
         car1 = min(car1 - action, upCarNum)
         car2 = max(car2 + action, 0)
     return [car1,car2], abs(moveNum)
