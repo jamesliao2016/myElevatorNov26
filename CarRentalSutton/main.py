@@ -68,6 +68,5 @@ while True:
     if (epsDlt < epsDltBase) and (epsDlt>0):
         break
 
-print(iniCars)
 print(valVec)
 # print('average reward: %f'%(float(vtHist[ww-1]) /(ww)))
