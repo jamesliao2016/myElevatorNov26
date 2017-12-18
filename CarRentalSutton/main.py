@@ -6,7 +6,7 @@ import reallotFun as rllt
 locNum = 2
 conArr = [3,4]
 repArr = [3,2]
-upCarNum = 20
+upCarNum = 3
 rhoVal = 0.9
 
 # Policy
@@ -20,7 +20,7 @@ iniCars = [10,10]
 lostSale = [(i-i) for i in range(len(iniCars))]
 vt = 0
 mvNumAbs = 0
-epsDltBase = 0.1
+epsDltBase = 5
 epsDlt = 100
 ww = 1
 vtHist = [2]
@@ -41,7 +41,10 @@ while True:
     actU = max(iniCars)
     for action in range(actL,actU):
         nuVal = 0
-        for uu in range(simPeriod):
+        diffTmp = 0
+        oo = 1
+        # for uu in range(simPeriod):
+        while True:
             tmpArr = []
             tmpRep = []
             for ee in range(len(conArr)):
@@ -55,8 +58,13 @@ while True:
             iniCarsUp, mvNumAbs = rllt.moveCar(iniCars, action, upCarNum)
             iniCarsUp,lostSale,rentVec = rllt.reallot(iniCarsUp,tmpArr,tmpRep,lostSale,upCarNum)
             vt = rllt.calVal(rentVec,mvNumAbs)
-            valBellTmp = vt + rhoVal * valVec[iniCars[0]][iniCars[1]]
-            nuVal += float(valBellTmp / simPeriod)
+            valBellTmp = vt + rhoVal * valVec[iniCarsUp[0]][iniCarsUp[1]]
+            nuVal = nuVal *(oo)/(oo+1) + float(valBellTmp / (oo+1))
+            oo += 1
+
+            if abs(nuVal - diffTmp) < epsDltBase:
+                break
+            diffTmp = nuVal
         if nuVal > (tmpVal + epsDltBase):
             tmpVal = nuVal
             valVec[iniRaw[0]][iniRaw[1]] = nuVal
