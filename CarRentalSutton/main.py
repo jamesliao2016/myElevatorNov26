@@ -70,6 +70,4 @@ while True:
 
 print(iniCars)
 print(valVec)
-# print(vt)
-# print(ww)
 # print('average reward: %f'%(float(vtHist[ww-1]) /(ww)))
