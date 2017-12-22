@@ -12,7 +12,7 @@ epsEval = 0.1
 
 # Policy
 w, h = upCarNum, upCarNum;
-carPol = [[int((y - x)/2) for x in range(w+1)] for y in range(h+1)]
+carPol = [[0 for x in range(w+1)] for y in range(h+1)]
 valVec = [[(0.0) for x in range(w+1)] for y in range(h+1)]
 
 # Simulation parameters
@@ -39,8 +39,8 @@ while True:
             diffNum = abs(iniCars[0] - iniCars[1])
             tmpVal = valVec[iniCars[0]][iniCars[1]]
             optSol = 0
-            actL = -min(iniCars)
-            actU = max(iniCars)
+            actL = max(-min(iniCars),-5)
+            actU = min(max(iniCars),5)
             for action in range(actL,actU):
                 nuVal = 0
                 diffTmp = 0

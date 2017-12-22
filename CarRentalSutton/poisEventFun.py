@@ -2,8 +2,11 @@
 import numpy as np
 from math import *
 # Poisson probability density
-def poisProbDen(lambdax,nx):
-    probRlt = pow(lambdax,nx)*exp(-lambdax)/factorial(nx)
+def poisProbDen(lambdax,nx,bound):
+    if nx<bound:
+        probRlt = pow(lambdax,nx)*exp(-lambdax)/factorial(nx)
+    else:
+        probRlt = 1 - poisProbAcc(lambdax,bound)
     return probRlt
 
 # Poisson accumulate probability
