@@ -1,6 +1,7 @@
 import poisEventFun as pef
 import numpy as np
 import reallotFun as rllt
+import retValFun as rvf
 
 # Parameters
 locNum = 2
@@ -28,12 +29,16 @@ vtHist = [2]
 # Simulation START here
 while True:
     gg=[]
+    valVec = rvf.returnVal(valVec, carPol, iniCars, epsDltBase, conArr, repArr, upCarNum, rhoVal)
+
     for numCar1 in range(upCarNum):
         for numCar2 in range(upCarNum):
         # for ss in range(3000):
             iniCars[0] = numCar1
             iniCars[1] = numCar2
-            epsDlt = 0.0
+            valVec = rvf.returnVal(valVec, carPol, iniCars, epsDltBase, conArr, repArr, upCarNum, rhoVal)
+
+        epsDlt = 0.0
             iniRaw = iniCars
             oldVal = valVec[iniCars[0]][iniCars[1]]
             diffNum = abs(iniCars[0] - iniCars[1])
@@ -45,28 +50,7 @@ while True:
                 nuVal = 0
                 diffTmp = 0
                 oo = 1
-                # Policy evaluation
-                while oo<=30:
-                    tmpArr = []
-                    tmpRep = []
-                    for ee in range(len(conArr)):
-                        lstIx = ee - 1
-                        arrNum = pef.retPoiNum(conArr[lstIx])
-                        repNum = pef.retPoiNum(repArr[lstIx])
-                        tmpArr.append(arrNum)
-                        tmpRep.append(repNum)
-                        numDlt = repNum - arrNum
-                        # iniCars[lstIx] += numDlt
-                    iniCarsUp, mvNumAbs = rllt.moveCar(iniCars, action, upCarNum)
-                    iniCarsUp,lostSale,rentVec = rllt.reallot(iniCarsUp,tmpArr,tmpRep,lostSale,upCarNum)
-                    vt = rllt.calVal(rentVec,mvNumAbs)
-                    valBellTmp = vt + rhoVal * valVec[iniCarsUp[0]][iniCarsUp[1]]
-                    nuVal = nuVal *(oo)/(oo+1) + float(valBellTmp / (oo+1))
-                    oo += 1
-                    if abs(nuVal - diffTmp) < epsEval:
-                        break
-                    diffTmp = nuVal
-                    # Policy improvement
+
                 if nuVal > (tmpVal + epsDltBase):
                     tmpVal = nuVal
                     valVec[iniRaw[0]][iniRaw[1]] = nuVal
