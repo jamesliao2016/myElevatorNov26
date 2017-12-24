@@ -2,12 +2,11 @@
 def reallot(iniCars,tmpArr,tmpRep,upCarNum):
     rentVec = []
     for tt in range(len(iniCars)):
-        lstIx = tt - 1
+        lstIx = tt
         if (iniCars[lstIx] - tmpArr[lstIx] + tmpRep[lstIx] > 0):
             rentNum = tmpArr[lstIx]
             iniCars[lstIx] = iniCars[lstIx] - tmpArr[lstIx] + tmpRep[lstIx]
             iniCars[lstIx] = min(iniCars[lstIx],upCarNum)
-
         else:
             iniCars[lstIx] = 0
             rentNum = iniCars[lstIx]

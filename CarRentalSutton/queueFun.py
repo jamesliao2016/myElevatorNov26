@@ -11,11 +11,9 @@ def arriveTime(lamx):
     return tt
 
 def transitFreq(iniCarNum,sampleSize,timeHo,lamx,mux):
-    # iniCarNum = 10
-    # sampleSize = 1000
-    # timeHo = 20
     thVal = lamx / (mux + lamx)
-    freqVec = np.zeros(timeHo)
+    freqVec = np.zeros(timeHo)  # Vector of people served
+    stateVec = np.zeros(timeHo)  # Vector of current cars / state
     for nn in range(sampleSize):
         qNum = 0 # Number of queued people
         sNumt = 0 # Number of served people
@@ -42,17 +40,29 @@ def transitFreq(iniCarNum,sampleSize,timeHo,lamx,mux):
                     cNum += 1
             sNumt += sNum
         freqVec[sNumt] += 1
-    return (freqVec)
+        stateVec[cNum - 1] += 1
+    sumval = np.sum(freqVec)
+    freqVec2 = [float(round((ww / sumval), 2)) for ww in freqVec]
+    return (freqVec2)
+
+def transitFull(sampleSize,timeHo,lamx,mux):
+    dd = [[transitFreq(ff,sampleSize,timeHo,lamx,mux)] for ff in range(timeHo)]
+    return dd
 
 if __name__ == '__main__':
 
     lamx = 2.0
     mux = 2.0
-    iniCarNum = 20
+    iniCarNum = 2
     sampleSize = 1000
     timeHo = 20
     freqVec = transitFreq(iniCarNum,sampleSize,timeHo,lamx,mux)
     sumval = np.sum(freqVec)
-    freqVec2 = [(round((ww / sumval),1)) for ww in freqVec]
-    freqVec2 = [(round(ww,1)) for ww in freqVec2]
-    print(freqVec2)
+    freqVec2 = [float(round((ww / sumval),2)) for ww in freqVec]
+
+    # print(freqVec2)
+    #
+    # dd = [[transitFreq(ff,sampleSize,timeHo,lamx,mux)] for ff in range(timeHo)]
+    # print(dd)
+    ff = transitFull(sampleSize,timeHo,lamx,mux)
+    print(ff)

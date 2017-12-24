@@ -2,6 +2,7 @@ import poisEventFun as pef
 import numpy as np
 import reallotFun as rllt
 import retValFun as rvf
+import queueFun as qf
 
 # Parameters
 locNum = 2
@@ -26,10 +27,15 @@ epsDltBase = 1
 epsDlt = 100
 ww = 1
 vtHist = [2]
+
+# Transition matrix
+tm1 = qf.transitFull(1000,upCarNum,conArr[0],repArr[0])
+tm2 = qf.transitFull(1000,upCarNum,conArr[1],repArr[1])
+
 # Simulation START here
 while True:
     gg=[]
-    valVec = rvf.returnVal(valVec, carPol, iniCars, epsDltBase, conArr, repArr, upCarNum, rhoVal)
+    valVec = rvf.returnVal(valVec, carPol, iniCars, epsDltBase, conArr, repArr, upCarNum, rhoVal,tm1,tm2)
 
     for numCar1 in range(upCarNum):
         for numCar2 in range(upCarNum):
