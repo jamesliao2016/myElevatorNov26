@@ -20,7 +20,7 @@ def returnVal(valVec,carPol,iniCars,epsDltBase,conArr,repArr,upCarNum,rhoVal,tm1
                         arrProb2 = tm2[iniCarsUp[1]][reqCar2]
                         joinProb = arrProb1 * arrProb2
                         vt = rllt.calVal(rentVec, mvNumAbs)
-                        valBellTmp = joinProb * (vt + rhoVal * valVec[iniCarsUp[0]][iniCarsUp[1]])
+                        valBellTmp = vt + rhoVal * valVec[iniCarsUp[0]][iniCarsUp[1]]
 
                         epsDlt = 0.0
                                 iniRaw = iniCars
