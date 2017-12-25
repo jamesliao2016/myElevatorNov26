@@ -66,7 +66,7 @@ if __name__ == '__main__':
     # dd = [[transitFreq(ff,sampleSize,timeHo,lamx,mux)] for ff in range(timeHo)]
     # print(dd)
     ff = transitFull(sampleSize,timeHo,lamx,mux)
-    print(ff[0][1][0])
+    print(ff)
     #
     # ufo = freqSerLeft(iniCarNum,sampleSize,timeHo,lamx,mux)
     # print(ufo[0][1])

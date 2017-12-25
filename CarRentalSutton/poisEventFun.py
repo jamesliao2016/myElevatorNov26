@@ -29,3 +29,8 @@ def retPoiNum(lambdax,bound):
             # print(' %f %f %f' % (dd1, dd2, jj))
             break
     return rlt
+
+if __name__ == '__main__':
+    for jj in range(10):
+        print(poisProbDen(3,jj,20))
+        print(jj)
