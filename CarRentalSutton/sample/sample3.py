@@ -190,6 +190,10 @@ class JacksCarRental(object):
 
 # module testing code
 if __name__ == '__main__':
+    import time
+    start_time = time.time()
     jacks_car_rental = JacksCarRental()
     for value_matrix, policy_matrix in jacks_car_rental.policy_iteration(num_iter_improvement=5):
         print(policy_matrix)
+
+    print("--- %s seconds ---" % (time.time() - start_time))

@@ -56,7 +56,6 @@ while True:
                 nuVal = 0
                 diffTmp = 0
                 oo = 1
-
                 if nuVal > (tmpVal + epsDltBase):
                     tmpVal = nuVal
                     valVec[iniRaw[0]][iniRaw[1]] = nuVal

@@ -124,7 +124,8 @@ def expectedReturn(state, action, stateValue):
             # if set True, model is simplified such that the # of cars returned in daytime becomes constant
             # rather than a random value from poisson distribution, which will reduce calculation time
             # and leave the optimal policy/value state matrix almost the same
-            constantReturnedCars = True
+            # constantReturnedCars = True
+            constantReturnedCars = False
             if constantReturnedCars:
                 # get returned cars, those cars can be used for renting tomorrow
                 returnedCarsFirstLoc = RETURNS_FIRST_LOC
@@ -148,6 +149,9 @@ def expectedReturn(state, action, stateValue):
                         returns += prob * (reward + DISCOUNT * stateValue[numOfCarsFirstLoc, numOfCarsSecondLoc])
     return returns
 
+import time
+
+start_time = time.time()
 
 newStateValue = np.zeros((MAX_CARS + 1, MAX_CARS + 1))
 improvePolicy = False
@@ -190,3 +194,4 @@ while True:
 prettyPrint(policy, ['# of cars in first location', '# of cars in second location', '# of cars to move during night'])
 prettyPrint(stateValue, ['# of cars in first location', '# of cars in second location', 'expected returns'])
 plt.show()
+print("--- %s seconds ---" % (time.time() - start_time))
