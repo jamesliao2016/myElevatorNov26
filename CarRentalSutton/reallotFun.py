@@ -1,20 +1,20 @@
 
 def reallot(iniCars,tmpArr,tmpRep,upCarNum):
-    iniCarsRlt=[]
+    carsRlt=[]
     rentVec = []
     for tt in range(len(iniCars)):
         lstIx = tt
         if (iniCars[lstIx] - tmpArr[lstIx] + tmpRep[lstIx] > 0):
             rentNum = tmpArr[lstIx]
-            iniCarsTmp = iniCars[lstIx] - tmpArr[lstIx] + tmpRep[lstIx]
-            iniCarsTmp = min(iniCarsTmp,upCarNum)
+            carsTmp = iniCars[lstIx] - tmpArr[lstIx] + tmpRep[lstIx]
+            carsTmp = min(carsTmp,upCarNum-1)
         else:
-            iniCarsTmp = 0
+            carsTmp = 0
             rentNum = iniCars[lstIx] + tmpRep[lstIx]
             # lostSale[lstIx] += -(iniCars[lstIx] - (tmpArr[lstIx]) + tmpRep[lstIx])
         rentVec.append(rentNum)
-        iniCarsRlt.append(iniCarsTmp)
-    return iniCarsRlt,rentVec
+        carsRlt.append(carsTmp)
+    return carsRlt,rentVec
 
 def calVal(rentVec,mvNumAbs):
     vt = 0
@@ -26,16 +26,15 @@ def moveCar(iniCars,action, upCarNum):
 
     car1 = iniCars[0]
     car2 = iniCars[1]
-    moveNum = 0
     if (action > 0):
-        moveNum = min(action,car1,(upCarNum - car2))
+        moveNum = min(action,car1,(upCarNum-1 - car2))
         car1 = max(car1 - moveNum,0)
-        car2 = min(car2 + moveNum,upCarNum)
+        car2 = min(car2 + moveNum,upCarNum-1)
         policy = moveNum
 
     else:
-        moveNum = min(-action, (upCarNum - car1), car2)
-        car1 = min(car1 + moveNum, upCarNum)
+        moveNum = min(-action, (upCarNum-1 - car1), car2)
+        car1 = min(car1 + moveNum, upCarNum-1)
         car2 = max(car2 - moveNum, 0)
         policy = -moveNum
 

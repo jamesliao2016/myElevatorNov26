@@ -20,16 +20,26 @@ def returnVal(valVec,carPol,iniCars,epsDltBase,conArr,repArr,upCarNum,rhoVal,cm1
                 valBellTmp = 0.0
                 for con1 in range(len(cm1)):
                     for con2 in range(len(cm2)):
-                        for ret1 in range(len(rm1)):
-                            for ret2 in range(len(rm2)):
-                                tmpArr = [con1,con2]
-                                tmpRep = [ret1,ret2]
-                                iniCarsTmp, rentVec = rllt.reallot(iniCarsUp, tmpArr, tmpRep, upCarNum)
-                                joinProb = cm1[con1] * cm2[con2] * rm1[ret1] * rm2[ret2]
+                        returnValConstant = True
+                        if returnValConstant:
+                            ret1 = repArr[0]
+                            ret2 = repArr[1]
+                            tmpArr = [con1, con2]
+                            tmpRep = [ret1, ret2]
+                            iniCarsTmp, rentVec = rllt.reallot(iniCarsUp, tmpArr, tmpRep, upCarNum)
+                            joinProb = cm1[con1] * cm2[con2]
+                            vt = rllt.calVal(rentVec, mvNumAbs)
+                            valBellTmp += joinProb * (vt + rhoVal * valVec[iniCarsTmp[0]][iniCarsTmp[1]])
+                        else:
+                            for ret1 in range(len(rm1)):
+                                for ret2 in range(len(rm2)):
+                                    tmpArr = [con1, con2]
+                                    tmpRep = [ret1, ret2]
+                                    iniCarsTmp, rentVec = rllt.reallot(iniCarsUp, tmpArr, tmpRep, upCarNum)
+                                    joinProb = cm1[con1] * cm2[con2] * rm1[ret1] * rm2[ret2]
 
-                                vt = rllt.calVal(rentVec, mvNumAbs)
-                                valBellTmp += joinProb * (vt + rhoVal * valVec[iniCarsTmp[0]][iniCarsTmp[1]])
-
+                                    vt = rllt.calVal(rentVec, mvNumAbs)
+                                    valBellTmp += joinProb * (vt + rhoVal * valVec[iniCarsTmp[0]][iniCarsTmp[1]])
                 valVec[iniRaw[0]][iniRaw[1]] = valBellTmp
                     # Policy improvement
                 diffVal = abs(valVec[iniRaw[0]][iniRaw[1]] - oldVal)
