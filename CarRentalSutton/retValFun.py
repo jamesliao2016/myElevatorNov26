@@ -3,16 +3,11 @@ import numpy as np
 import reallotFun as rllt
 import queueFun as qf
 
-def returnVal(valVec,carPol,iniCars,epsDltBase,conArr,repArr,upCarNum,rhoVal):
+def returnVal(valVec,carPol,iniCars,epsDltBase,conArr,repArr,upCarNum,rhoVal,cm1,cm2,rm1,rm2):
     # Simulation START here
-    arrBound = 10
-    cm1 = [pef.poisProbDen(conArr[0],jj,arrBound) for jj in range(arrBound)]
-    cm2 = [pef.poisProbDen(conArr[1], jj, arrBound) for jj in range(arrBound)]
-    rm1 = [pef.poisProbDen(repArr[0], jj, arrBound) for jj in range(arrBound)]
-    rm2 = [pef.poisProbDen(repArr[1], jj, arrBound) for jj in range(arrBound)]
-
     tt = 0
     while tt < 100:
+    # while True:
         gg=[]
         tt+=1
         # (numCar1,numCar2): the current cars of the two sites
@@ -21,7 +16,7 @@ def returnVal(valVec,carPol,iniCars,epsDltBase,conArr,repArr,upCarNum,rhoVal):
                 iniRaw = [numCar1,numCar2]
                 iniCars = [numCar1, numCar2]
                 oldVal = valVec[numCar1][numCar2]
-                iniCarsUp, mvNumAbs = rllt.moveCar(iniCars, carPol[numCar1][numCar2], upCarNum)
+                iniCarsUp, mvNumAbs, polTmp = rllt.moveCar(iniCars, carPol[numCar1][numCar2], upCarNum)
                 valBellTmp = 0.0
                 for con1 in range(len(cm1)):
                     for con2 in range(len(cm2)):

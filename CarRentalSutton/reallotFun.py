@@ -9,7 +9,7 @@ def reallot(iniCars,tmpArr,tmpRep,upCarNum):
             iniCars[lstIx] = min(iniCars[lstIx],upCarNum)
         else:
             iniCars[lstIx] = 0
-            rentNum = iniCars[lstIx]
+            rentNum = iniCars[lstIx] + tmpRep[lstIx]
             # lostSale[lstIx] += -(iniCars[lstIx] - (tmpArr[lstIx]) + tmpRep[lstIx])
         rentVec.append(rentNum)
     return iniCars,rentVec
@@ -26,13 +26,15 @@ def moveCar(iniCars,action, upCarNum):
     car2 = iniCars[1]
     moveNum = 0
     if (action > 0):
-        action = min(action,car1,car2)
-        car1 = max(car1 - action,0)
-        car2 = min(car2 + action,upCarNum)
-        moveNum = action
+        moveNum = min(action,car1,(upCarNum - car2))
+        car1 = max(car1 - moveNum,0)
+        car2 = min(car2 + moveNum,upCarNum)
+        policy = moveNum
+
     else:
-        action = min(-action, car1, car2)
-        car1 = min(car1 - action, upCarNum)
-        car2 = max(car2 + action, 0)
-        moveNum = action
-    return [car1,car2], abs(moveNum)
+        moveNum = min(-action, (upCarNum - car1), car2)
+        car1 = min(car1 + moveNum, upCarNum)
+        car2 = max(car2 - moveNum, 0)
+        policy = -moveNum
+
+    return [car1,car2], abs(moveNum), policy
