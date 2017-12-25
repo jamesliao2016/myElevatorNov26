@@ -49,7 +49,7 @@ if __name__ == '__main__':
     locNum = 2
     conArr = [3, 4]
     repArr = [3, 2]
-    upCarNum = 5
+    upCarNum = 10
     rhoVal = 0.9
     epsEval = 0.1
 

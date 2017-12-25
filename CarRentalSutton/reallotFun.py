@@ -1,18 +1,20 @@
 
 def reallot(iniCars,tmpArr,tmpRep,upCarNum):
+    iniCarsRlt=[]
     rentVec = []
     for tt in range(len(iniCars)):
         lstIx = tt
         if (iniCars[lstIx] - tmpArr[lstIx] + tmpRep[lstIx] > 0):
             rentNum = tmpArr[lstIx]
-            iniCars[lstIx] = iniCars[lstIx] - tmpArr[lstIx] + tmpRep[lstIx]
-            iniCars[lstIx] = min(iniCars[lstIx],upCarNum)
+            iniCarsTmp = iniCars[lstIx] - tmpArr[lstIx] + tmpRep[lstIx]
+            iniCarsTmp = min(iniCarsTmp,upCarNum)
         else:
-            iniCars[lstIx] = 0
+            iniCarsTmp = 0
             rentNum = iniCars[lstIx] + tmpRep[lstIx]
             # lostSale[lstIx] += -(iniCars[lstIx] - (tmpArr[lstIx]) + tmpRep[lstIx])
         rentVec.append(rentNum)
-    return iniCars,rentVec
+        iniCarsRlt.append(iniCarsTmp)
+    return iniCarsRlt,rentVec
 
 def calVal(rentVec,mvNumAbs):
     vt = 0
